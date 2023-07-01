@@ -1,0 +1,45 @@
+@keyframes aboutAnim1{
+    from{
+        transform: translateX(+150%);
+    }to{
+        transform: translateX(0);
+    }
+}
+@keyframes aboutAnim2{
+    from{
+        transform: translateX(0);
+    }to{
+        transform: translateX(+150%);
+    }
+}
+.about{
+    width: 1200px;
+
+    animation: aboutAnim1 0.5s;
+}
+.about-info{
+    display: grid;
+    grid-template-columns: repeat(2, 600px);
+    grid-template-rows: repeat(3, auto);
+    grid-gap: 0px;
+
+    color: #4E4E4E;
+    font-size: 32px;
+    font-weight: 600;
+}
+.about-info div span{
+    color: #134074;
+}
+.about-info div:nth-child(1){
+    grid-area: 1 / 1 / 2 / 2;
+}
+.about-info div:nth-child(2){
+    grid-area: 2 / 2 / 3 / 3;
+    
+    text-align: right;
+
+    margin-block: 50px;
+}
+.about-info div:nth-child(3){
+    grid-area: 3 / 1 / 4 / 2;
+}

@@ -1,26 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React,{useState} from 'react';
 
-function App() {
+import Navbar from './components/Navbar';
+import Fixer from './components/Fixer';
+import About from './components/About';
+
+export default function App() {
+
+  const [currentSection, setCurrentSection]=useState<string>("home")
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <Navbar currentSection={currentSection} setCurrentSection={setCurrentSection}/>
+      <main>
+        {currentSection==="home"&&<Fixer setCurrentSection={setCurrentSection}/>}
+        {currentSection==="about"&&<About/>}
+      </main>
+    </>
+  )
 }
-
-export default App;
