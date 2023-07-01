@@ -34,3 +34,47 @@ h1{
 
   text-align: center;
 }
+
+@media(max-width: 1440px){
+  main{
+    margin-top: 70px;
+  }
+  h1{
+    font-size: 40px;
+  
+    margin-block: 70px;
+  }
+}
+@media(max-width: 1024px){
+  main{
+    margin-top: 60px;
+  }
+  h1{
+    font-size: 36px;
+  
+    margin-block: 60px;
+  }
+}
+@media(max-width: 800px){
+  body{
+    -webkit-tap-highlight-color: transparent;
+  }
+  main{
+    margin-top: 55px;
+  }
+  h1{
+    font-size: 32px;
+  
+    margin-block: 55px;
+  }
+}
+@media(max-width: 600px){
+  main{
+    margin-top: 45px;
+  }
+  h1{
+    font-size: 21px;
+  
+    margin-block: 45px;
+  }
+}

@@ -1,5 +1,5 @@
-
 export default function About(){
+    //literally nothing here, simple jsx syntax
     return(
         <section className="about">
             <h1>About</h1>

@@ -5,6 +5,7 @@ nav{
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 2;
 
     height: 80px;
     width: 100vw;
@@ -50,4 +51,71 @@ nav{
     background-color: #EEF4ED;
     
     color: #134074;
+}
+
+@media(max-width: 1440px){
+    nav{
+        height: 70px;
+    }
+    .inner-nav{
+        width: 900px;
+    }
+    .inner-nav-title{
+        font-size: 24px;
+    }
+    .inner-nav-menu li{
+        font-size: 17px;
+    
+        padding-inline: 20px;
+    }
+}
+@media(max-width: 1024px){
+    nav{
+        height: 60px;
+    }
+    .inner-nav{
+        width: 654px;
+    }
+    .inner-nav-title{
+        font-size: 20px;
+    }
+    .inner-nav-menu li{
+        font-size: 15px;
+        padding-inline: 17.5px;
+    }
+}
+@media(max-width: 800px){
+    nav{
+        height: 55px;
+    }
+    .inner-nav{
+        width: 500px;
+        justify-content: center;
+    }
+    .inner-nav-title{
+        display: none;
+    }
+    .inner-nav-menu li{
+        font-size: 18px;
+        padding-inline: 40px;
+    }
+    .inner-nav-menu li:hover{
+        background-color: transparent;
+        
+        color: white;
+    }
+    .inner-nav-menu li:active{
+        background-color: #EEF4ED;
+        
+        color: #134074;
+    }
+}
+@media(max-width: 600px){
+    nav{
+        height: 50px;
+    }
+    .inner-nav{
+        width: 90%;
+        min-width: 310px;
+    }
 }

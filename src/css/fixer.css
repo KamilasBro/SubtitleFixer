@@ -50,7 +50,7 @@
     font-size: 32px;
     font-weight: 500;
 
-    padding-left: 30px;
+    margin-left: 30px;
 }
 .dropbox-text span{
     cursor: pointer;
@@ -102,4 +102,122 @@ button{
 }
 button:hover{
     transform: translateY(+15px);
+}
+
+@media(max-width: 1440px){
+    .fixer{
+        width: 900px;
+    }
+    .fixer-dropbox{
+        height: 350px;
+    }
+    .dropbox-icon{
+        height: 90px;
+        width: 90px;
+    }
+    .dropbox-text{
+        font-size: 28px;
+    
+        margin-left: 25px;
+    }
+    .fixer p{
+        font-size: 16px;
+    }
+    button{
+        margin-top: 30px;
+    
+        font-size: 22px;
+    }
+}
+@media(max-width: 1024px){
+    .fixer{
+        width: 654px;
+    }
+    .fixer-dropbox{
+        height: 300px;
+    }
+    .dropbox-icon{
+        height: 75px;
+        width: 75px;
+    }
+    .dropbox-text{
+        font-size: 22px;
+    }
+    .fixer p{
+        font-size: 12px;
+    }
+    button{
+        margin-top: 25px;
+    
+        font-size: 20px;
+    }
+}
+@media(max-width: 800px){
+    @keyframes fixerAnim1{
+        from{
+            transform: translateY(-150%);
+        }to{
+            transform: translateY(0);
+        }
+    }
+    @keyframes fixerAnim2{
+        from{
+            transform: translateY(0);
+        }to{
+            transform: translateY(-150%);
+        }
+    }
+    @keyframes borderAnim{
+        0%{
+            border-color: transparent;
+        }
+        100%{
+            border: 3px dashed #134074;
+        }
+    }
+    .fixer{
+        width: 500px;
+    }
+    .fixer-dropbox{
+        height: 250px;
+        border: 3px dashed #134074;
+    }
+    .dropbox-icon{
+        height: 65px;
+        width: 65px;
+    }
+    .dropbox-text{
+        margin-left: 20px;
+
+        font-size: 20px;
+    }
+    button{
+        margin-top: 20px;
+    
+        font-size: 16px;
+    }
+}
+@media(max-width: 600px){
+    .fixer{
+        width: 310px;
+    }
+    .fixer-dropbox{
+        height: 150px;
+    }
+    .dropbox-icon{
+        height: 45px;
+        width: 45px;
+    }
+    .dropbox-text{
+        margin-left: 5px;
+        font-size: 13px;
+    }
+    .fixer p{
+        font-size: 9px;
+    }
+    button{
+        margin-top: 15px;
+    
+        font-size: 12px;
+    }
 }

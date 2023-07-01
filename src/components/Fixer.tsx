@@ -1,18 +1,26 @@
 import React,{MutableRefObject, useRef, useState, useEffect} from "react"
+
+//interface to make typescript happy, literally I really don't know how this work
+//but he is happy
 interface Props{
-    currentSection?: string,
     setCurrentSection: React.Dispatch<React.SetStateAction<string>>
 }
 export default function Fixer(props:Props){
+    //reference for the hidden input
     const inputRef=useRef() as MutableRefObject<HTMLInputElement>
+    //files extensions list that will limit what can be uploaded
     const fileExtensionsList:string=`.cdg, .idx, .srt, .sub, .utf, .ass, .ssa, .aqt, 
         .jss, .psb, .rt, .sami, .smi, .txt, .smil, .stl, 
         .usf, .dks, .pjs, .mpl2, .mks, .vtt, .tt, .ttml, 
         .dfxp, .scc`;
+    //content of the file that will be decoded, it is empty string from start to make some condition logic
     const [fileContent, setFileContent]=useState<string>("")
+    //just to set downloaded file name for user
     const [fileName, setFileName]=useState<string>("")
+    //to check when user is dragging something on dropbox
     const [isDragged, setIsDragged]=useState<boolean>(false)
     useEffect(()=>{
+        //to prevent opening file when user misses with the file drop
         window.addEventListener("dragover",function(event){
             event.preventDefault()
           })
@@ -21,6 +29,7 @@ export default function Fixer(props:Props){
         })
     },[])
     function decodeFile(file:string){
+        //list of symbols and its counterparts
         const specialSumbols=[
             {
                 decoded: "ą",
@@ -71,19 +80,33 @@ export default function Fixer(props:Props){
                 coded: "Œ" 
             }
         ]
+            //code will take filecontent and check if the file contain any
+            //symbols from the list and repalce them with their counterparts
             specialSumbols.forEach(char=>{
               while(file.includes(char.coded)){
-                file=file.split(char.coded).join(char.decoded);//this will change all letters per iteration
-                //file=file.replace(char.coded, char.decoded) this will change one letter per iteration
+                //this will change all letters per iteration (if all characters contained code will run 11 times)
+                file=file.split(char.coded).join(char.decoded)
+                //this will change one letter per iteration (if all characters contained code will run much more times)
+                //file=file.replace(char.coded, char.decoded) 
               }
             })
+            //and we return decoded file
             return file;
+    }
+    //this function changes the state that is responsible for rendering sections
+    //it is here to force the reset of dropbox to prevent many bugs
+    function forceRender(){
+        props.setCurrentSection("none")
+        setTimeout(()=>{props.setCurrentSection("home")},1)
     }
     return(
         <section className="fixer">
             <h1>Fix your subtitles today!</h1>
-            <div 
-                style={isDragged?{borderColor: "#24db0f"}:{}}
+            <div
+                //if user is dragging something on dropbox the border color will be green
+                //also when user uploaded the page the border will not change that indicates the user he cant
+                //do that
+                style={isDragged&&fileName===""?{borderColor: "#24db0f"}:{}}
                 className="fixer-dropbox"
                 onDragEnter={()=>{
                     setIsDragged(true)
@@ -93,24 +116,35 @@ export default function Fixer(props:Props){
                 }}
                 onDrop={(event)=>{
                     setIsDragged(false)
+                    //we check if file was uploaded
                     if(fileContent===""){
+                        //if not then we check if the file exists
+                        //mainly to make typescript happy
                         if(event.dataTransfer.files){
+                            //then we check if the user dropped only one file and
+                            //if the dropped file matches the type in the 
+                            //condition (textfiles)
                         if(event.dataTransfer.files.length===1
                             &&(event.dataTransfer.files[0].type==="text/plain"
                             ||event.dataTransfer.files[0].type==="")){
+                                //if all checks are good we save filename
+                                //and then we are using filereader to take 
+                                //content of the file
                                 setFileName(event.dataTransfer.files[0].name)
                                 const reader = new FileReader();
                                     reader.addEventListener('load', function() {
                                     if(typeof this.result==="string"){
+                                        //if the result is the string we set our filecontent state
                                         setFileContent(this.result)
-
                                     }
                                 })
                                     reader.readAsText(event.dataTransfer.files[0]);
                             }else{
+                                //if file didn't pass the conditions, the code indicates the user
+                                //what went wrong
                                 event.dataTransfer.files.length>1?
                                 alert("Please drop only one file!"):
-                                (event.dataTransfer.files[0].type==="text/plain"||event.dataTransfer.files[0].type==="")&&
+                                (event.dataTransfer.files[0].type==="text/plain"||event.dataTransfer.files[0].type!=="")&&
                                 alert("Wrong file exstension!")
                             }
                     }}
@@ -128,8 +162,12 @@ export default function Fixer(props:Props){
                     type="file"
                     ref={inputRef}
                     accept={fileExtensionsList}
-                    
                     onChange={(event)=>{
+                        //same as in drag and drop
+                        //but we don't check if the file was uploaded and
+                        //data structure is slightly different
+                        //because when we click upload again or something goes wrong
+                        //component will force rerender
                         if(event.target.files){
                             if(event.target.files[0].type==="text/plain"||event.target.files[0].type===""){
                                 setFileName(event.target.files[0].name)
@@ -137,28 +175,30 @@ export default function Fixer(props:Props){
                                 reader.addEventListener('load', function() {
                                 if(typeof this.result==="string"){
                                     setFileContent(this.result)
-                                    
                                 }
                             })
                             reader.readAsText(event.target.files[0]);      
                             }else{
                                 alert("Wrong file exstension!")
+                                forceRender()
                             }
                         }}}
                     hidden
                  />
                 <span className="dropbox-text">
+                    {/*indicator for the user*/}
                     {fileContent!==""?"File uploaded ":"Drop your file here or "}
                     <span
                     onClick={()=>{
                         if(fileContent!==""){
-                            props.setCurrentSection("none")
-                            setTimeout(()=>{props.setCurrentSection("home")},1)
-                            //conditional rerender to solve stupid bug
+                            //if file was uploaded we rerender component
+                            forceRender()
                         }else{
+                            //if was not we trigger file upload
                             inputRef.current.click()
                         }
                     }}>
+                    {/*indicator for the user*/}
                     {fileContent!==""?"Upload Again":"Upload Manually"}
                     </span>
                 </span>
@@ -169,15 +209,23 @@ export default function Fixer(props:Props){
                 <span> polish language</span>, as 
                 the title of the site suggests.
             </p>
+            {/*we render download button when content file exists
+            (is different that starting value) */}
             {fileContent!==""&&
             <div className="button-wrap">
                 <button
                     onClick={()=>{
+                        //we creating necessary elements to let user
+                        //download file
                         const element = document.createElement("a");
+                        //we making blob of a decoded filecontent with text type
                         const file = new Blob([decodeFile(fileContent)], {type: 'text/plain'});
+                        //we creating href for the a tag
                         element.href = URL.createObjectURL(file);
+                        //then we download file with updated before original name
                         element.download = `Updated ${fileName}`;
                         document.body.appendChild(element); // Required for this to work in FireFox
+                        //and finally we trigger the click
                         element.click();
                     }}
                 >Download</button>
