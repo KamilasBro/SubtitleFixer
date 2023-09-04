@@ -1,5 +1,5 @@
 import React,{MutableRefObject, useRef, useState, useEffect} from "react"
-
+import "./fixer.css"
 //interface to make typescript happy, literally I really don't know how this work
 //but he is happy
 interface Props{

@@ -1,3 +1,4 @@
+import "./about.css"
 export default function About(){
     //literally nothing here, simple jsx syntax
     return(

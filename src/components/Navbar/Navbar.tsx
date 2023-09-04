@@ -1,5 +1,5 @@
 import React,{useState} from "react";
-
+import "./navbar.css"
 //typescript interface to make sure props will always have given types
 interface Props{
     currentSection: string,

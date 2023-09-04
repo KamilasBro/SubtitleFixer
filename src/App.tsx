@@ -1,8 +1,8 @@
 import React,{useState} from 'react';
 
-import Navbar from './components/Navbar';
-import Fixer from './components/Fixer';
-import About from './components/About';
+import Navbar from './components/Navbar/Navbar';
+import Fixer from './components/Fixer/Fixer';
+import About from './components/About/About';
 
 export default function App() {
 
