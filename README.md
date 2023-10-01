@@ -12,3 +12,5 @@ The design was done in 30 minutes so it is not amazing and there could be more i
 
 ## Problems
 To prevent some bugs the component will force self render
+# Preview
+https://polishsubtitlesfixer.netlify.app/
